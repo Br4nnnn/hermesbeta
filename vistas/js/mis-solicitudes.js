@@ -20,6 +20,7 @@ $(document).on("click", ".btnVerDetalle", function () {
       $("#detalleFechaInicio").text(respuesta["fecha_inicio"]);
       $("#detalleFechaFin").text(respuesta["fecha_fin"]);
       $("#detalleMotivoPrestamo").text(respuesta["motivo"]);
+    
        
       datosDetalle = new FormData();
       datosDetalle.append("accion", "mostrarPrestamoDetalle");

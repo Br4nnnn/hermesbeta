@@ -34,6 +34,9 @@ $(document).on('click', '.btnVerDetalles', function() {
             $("#detalleFechaInicio").text(respuesta["fecha_inicio"]);
             $("#detalleFechaFin").text(respuesta["fecha_fin"]);
             $("#detalleMotivoPrestamo").text(respuesta["motivo"]);
+            $("#detalleUsuarioNombre").text(respuesta["nombre_usuario"]);
+            $("#detalleUsuarioRol").text(respuesta["nombre_rol"]);
+           
 
             // Mostrar u ocultar el botón "Aceptar" según el estado
             if (respuesta["estado_prestamo"] === "Autorizado") {
