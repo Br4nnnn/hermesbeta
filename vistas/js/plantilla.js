@@ -1,6 +1,6 @@
 window.addEventListener('load', function() {
   initializeDataTable("#tblSedes");
-  initializeDataTable("#tblFichas");
+  //initializeDataTable("#tblFichas");
   // initializeDataTable("#tblUsuarios");
   // initializeDataTable("#tblEquipos");
   initializeDataTable("#tblRoles");

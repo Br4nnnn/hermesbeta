@@ -123,8 +123,6 @@
                                 <table class="table table-bordered table-striped " id="tblDetallePrestamo">
                                     <thead>
                                         <tr>
-                                
-
                                             <th>ID</th>
                                             <th>Categoría</th>
                                             <th>Equipo</th>

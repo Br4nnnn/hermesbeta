@@ -1,3 +1,74 @@
+/* ==================================================
+SERVERSIDE EQUIPOS
+================================================== */
+
+$('#tblFichas').DataTable({
+    "processing": true,
+    "serverSide": true,
+    "sAjaxSource": "ajax/serverside/serverside.fichas.php",
+    "columns": [
+        { "data": null },
+        { "data": "1" },
+        { "data": "2" },
+        { "data": "3" },
+        { "data": "4" },
+        { "data": "5" },
+        { "data": "6" },
+        { "data": null }
+    ],
+    "columnDefs": [
+        {
+            "targets": [0],
+            "render": function(data, type, row, meta) {
+                return meta.row + 1;
+            },
+        },
+        {
+            "targets": [6],
+            "render": function(data, type, row) {
+                if (data === "activa") {
+                    return "<button  class='btn btn-success btn-xs btnActivarFicha' idFicha='" + row[0] + "' estadoFicha='inactiva'><i class='fas fa-check'></i></button>";
+                } else {
+                    return "<button  class='btn btn-danger btn-xs btnActivarFicha' idFicha='" + row[0] + "' estadoFicha='activa'><i class='fas fa-ban'></i></button>";                    
+                }
+            }
+        },
+
+        {
+            "targets": [-1],
+            "render": function(row) {
+                
+            return "<div class='btn-group'>" +
+                "<button title='Editar datos ficha' class='btn btn-default btn-xs btnEditarFicha' idFicha='" + row[0] + "' data-toggle='modal' data-target='#modalEditFicha'>" +
+                "<i class='fas fa-edit '></i>" +
+                "</button></div>";
+
+                 
+            }
+        }
+    ],
+    "responsive": true,
+    "autoWidth": false,
+    "lengthChange": true,
+    "lengthMenu":[10, 25, 50, 100],
+    "language": {
+        "lengthMenu": "Mostrar _MENU_ registros",
+        "zeroRecords": "No se encontraron resultados",
+        "info": "Mostrando pagina _PAGE_ de _PAGES_",
+        "infoEmpty": "No hay registros disponibles",
+        "infoFiltered": "(filtrado de _MAX_ total registros)",
+        "search": "Buscar:",
+        "paginate": {
+          "first":      "Primero",
+          "last":       "Ultimo",
+          "next":       "Siguiente",
+          "previous":   "Anterior"
+        },
+    },
+    "buttons": ["csv", "excel", "pdf"],
+    "dom": "lfBrtip"    
+});
+
 $(document).on("click", ".btnEditarFicha", function() {
 // $(".btnEditarFicha").click(function() {
     var idFicha = $(this).attr("idFicha");

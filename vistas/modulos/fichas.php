@@ -35,8 +35,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <table id="tblFichas" class="table table-bordered table-striped">
-                                    <thead>
+                                <table id="tblFichas" class="table table-bordered table-striped table-hover">
+                                    <thead class="bg-dark">
                                     <tr>
                                         <th>ID</th>
                                         <th>Código</th>
@@ -48,38 +48,7 @@
                                         <th>Acciones</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                        <?php
-                                            // Fetch the list of Fichas
-                                            $item = null;
-                                            $valor = null;
-                                            $fichas = ControladorFichas::ctrMostrarFichas($item, $valor);
-                                            // Loop through the Fichas and display them in the table
-                                            foreach ($fichas as $key => $value) {
-                                                echo '<tr>
-                                                    <td>' . ($key + 1) . '</td>
-                                                    <td>' . $value["codigo"] . '</td>
-                                                    <td>' . $value["descripcion"] . '</td>
-                                                    <td>' . $value["nombre_sede"] . '</td>
-                                                    <td>' . $value["fecha_inicio"] . '</td>
-                                                    <td>' . $value["fecha_fin"] . '</td>
-                                                    <td>' ;
-                                                        if ($value["estado"] == "activa") {
-                                                            echo '<button class="btn btn-success btn-xs btnActivarFicha" idFicha="'.$value["id_ficha"].'" estadoFicha="inactiva"><i class="fas fa-check"></i></button>';
-                                                        } else {
-                                                            echo '<button class="btn btn-danger btn-xs btnActivarFicha" idFicha="'.$value["id_ficha"].'" estadoFicha="activa"><i class="fas fa-ban"></i></button>';
-                                                        };
-                                                echo '</td>
-                                                    <td>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-default btn-xs btnEditarFicha" idFicha="'.$value["id_ficha"].'" data-toggle="modal" data-target="#modalEditFicha"><i class="fas fa-edit"></i></button>
-                                                        </div>
-                                                    </td>
-                                                </tr>';
-                                            }
-                                        ?>
-                                    <!-- Data will be populated here -->
-                                    </tbody>
+                                    
                                 </table>
                             </div>
                         </div>
