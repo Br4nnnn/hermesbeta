@@ -30,6 +30,7 @@ $(document).on('click', '.btnVerDetalles', function() {
         success: function(respuesta) {
             // Rellenar los campos de la modal
             $("#numeroPrestamo, #numeroPrestamo").text(respuesta["id_prestamo"]);
+            $("#idPrestamoSalida").val(respuesta["id_prestamo"]);
             $("#detalleTipoPrestamo").text(respuesta["estado_prestamo"]);
             $("#detalleFechaInicio").text(respuesta["fecha_inicio"]);
             $("#detalleFechaFin").text(respuesta["fecha_fin"]);
@@ -70,27 +71,5 @@ $(document).on('click', '.btnVerDetalles', function() {
                 }
             });
         }
-    });
-});
-$(document).on('click', '#btnAceptarPrestamo', function() {
-    var idPrestamo = $("#numeroPrestamo").text().trim();
-    $.ajax({
-        url: "ajax/Salidas.ajax.php",
-        method: "POST",
-        data: {
-            accion: "prestarPrestamo",
-            idPrestamo: idPrestamo
-        },
-        dataType: "json",
-        success: function(respuesta) {
-            if (respuesta.status === "ok") {
-                $("#detalleTipoPrestamo").text("Prestado");
-                $("#btnAceptarPrestamo").addClass("d-none");
-                location.reload();
-            } else {
-                alert("Error: " + respuesta.mensaje);
-            }
-        }
-
     });
 });

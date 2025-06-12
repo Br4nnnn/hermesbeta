@@ -208,3 +208,170 @@ END$$
 DELIMITER ;
 ```
 
+# Carga Masiva de Usuarios
+
+## Descripción
+
+Este módulo permite la importación masiva de usuarios desde archivos Excel (XLSX) o CSV. El sistema valida los datos, procesa la información y genera un reporte detallado de los resultados.
+
+## Características
+
+- Importación desde Excel o CSV  
+- Validaciones automáticas de datos  
+- Asignación de roles y permisos  
+- Generación de reportes de importación  
+- Manejo de errores detallado  
+- Compatibilidad con caracteres especiales  
+
+## Requisitos Previos
+
+- PHP 7.4 o superior  
+- Composer instalado  
+- Permisos de escritura en el directorio del proyecto  
+
+## Instalación
+
+1. Instalar PhpSpreadsheet vía Composer:
+
+```bash
+cd d:\appserver\Apache24\htdocs\hermesBeta
+composer require phpoffice/phpspreadsheet
+```
+
+2. Verificar la instalación en `composer.json`:
+
+```json
+{
+  "require": {
+    "phpoffice/phpspreadsheet": "^4.3"
+  }
+}
+```
+
+## Configuración del Servidor
+
+### PHP Configuration (`php.ini`)
+
+Asegúrese de tener las siguientes extensiones habilitadas en su archivo `php.ini`:
+
+```ini
+extension=php_gd.dll
+extension=php_zip.dll
+extension=php_xml.dll
+extension=php_xmlrpc.dll
+extension=php_mbstring.dll
+```
+
+Pasos:
+
+1. Abrir el archivo `php.ini`  
+2. Buscar las líneas correspondientes  
+3. Quitar el punto y coma (;) del inicio si está comentada  
+4. Guardar el archivo y reiniciar Apache  
+
+### Apache Configuration (`httpd.conf`)
+
+Asegúrese de tener los siguientes módulos habilitados en su archivo `httpd.conf`:
+
+```apache
+LoadModule rewrite_module modules/mod_rewrite.so
+LoadModule headers_module modules/mod_headers.so
+```
+
+Además, verifique que tiene las siguientes directivas en su configuración:
+
+```apache
+<Directory "d:/appserver/Apache24/htdocs/hermesBeta">
+    Options Indexes FollowSymLinks
+    AllowOverride All
+    Require all granted
+</Directory>
+```
+
+Después de realizar estos cambios:
+
+1. Guardar los archivos de configuración  
+2. Reiniciar el servidor Apache  
+3. Verificar que no hay errores en el log de Apache  
+
+## Estructura del Archivo Excel
+
+| Columna | Descripción        | Requerido         |
+|---------|--------------------|-------------------|
+| A       | Nombre             | Sí                |
+| B       | Apellido           | Sí                |
+| C       | Tipo Documento     | Sí                |
+| D       | Número Documento   | Sí                |
+| E       | Email              | Sí                |
+| F       | Teléfono           | No                |
+| G       | Dirección          | No                |
+| H       | Género             | No                |
+| I       | ID Rol             | Sí                |
+| J       | ID Sede            | Solo Aprendices   |
+| K       | ID Ficha           | Solo Aprendices   |
+
+### Ejemplo de Formato Excel
+
+| Nombre | Apellido | Tipo Doc | Num Doc  | Email           | Teléfono   | Dirección       | Género | ID Rol | ID Sede | ID Ficha |
+|--------|----------|----------|----------|------------------|------------|------------------|--------|--------|----------|-----------|
+| Juan   | Pérez    | CC       | 12345678 | juan@email.com   | 3001234567 | Calle 123 #45    | 2      | 6      | 1        | 2468135   |
+| María  | López    | TI       | 98765432 | maria@email.com  | 3109876543 | Av Principal 78  | 1      | 6      | 2        | 1357924   |
+
+## Proceso de Importación
+
+1. Acceder al módulo de usuarios  
+2. Hacer clic en "Importar Usuarios"  
+3. Seleccionar el archivo Excel/CSV  
+4. El sistema procesará y validará:
+   - Campos requeridos  
+   - Formato de email  
+   - Existencia de roles  
+   - Usuarios duplicados  
+   - Relaciones sede-ficha  
+5. Se generará un reporte con:
+   - Usuarios importados exitosamente  
+   - Errores encontrados  
+   - Estadísticas de la importación  
+
+## Consideraciones
+
+- La contraseña inicial será el número de documento  
+- Se asigna una imagen de perfil por defecto  
+- Los usuarios se crean en estado "activo" y condición "en_regla"  
+- Para rol Aprendiz (ID 6) son obligatorios sede y ficha  
+- El reporte se genera en formato TXT con codificación UTF-8  
+
+## Manejo de Errores
+
+El sistema valida y reporta:
+
+- Campos obligatorios faltantes  
+- Formatos inválidos  
+- Documentos/emails duplicados  
+- Roles inexistentes  
+- Relaciones sede-ficha inválidas  
+- Errores en la base de datos  
+
+## Ejemplos
+
+### Formato correcto de Excel
+
+| Nombre | Apellido | Tipo Doc | Num Doc  | Email             |
+|--------|----------|----------|----------|-------------------|
+| Juan   | Pérez    | CC       | 12345678 | juan@ejemplo.com  |
+
+### Ejemplo de Reporte Generado
+
+```txt
+=== REPORTE DE IMPORTACIÓN DE USUARIOS ===
+Fecha: 2025-06-12 14:30:45
+
+USUARIOS IMPORTADOS EXITOSAMENTE (1):
+----------------------------------------
+Fila: 2 | Documento: 12345678 | Nombre: Juan Pérez
+
+USUARIOS CON ERRORES (0):
+----------------------------------------
+```
+
+

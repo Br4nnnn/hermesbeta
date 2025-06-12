@@ -57,21 +57,37 @@ class Modelosalida
     
     
 
-static public function mdlPrestarPrestamo($idPrestamo) {
-    $stmt = Conexion::conectar()->prepare(
-        "UPDATE prestamos SET estado_prestamo = 'Prestado' WHERE id_prestamo = :id"
-    );
-    $stmt->bindParam(":id", $idPrestamo, PDO::PARAM_INT);
+    static public function mdlPrestarPrestamo($idPrestamo) {
+        $stmt = Conexion::conectar()->prepare(
+            "UPDATE prestamos SET estado_prestamo = 'Prestado' WHERE id_prestamo = :id"
+        );
+        $stmt->bindParam(":id", $idPrestamo, PDO::PARAM_INT);
 
-    if ($stmt->execute()) {
-        if ($stmt->rowCount() > 0) {
-            return ["status" => "ok", "mensaje" => "Préstamo actualizado"];
+        if ($stmt->execute()) {
+            if ($stmt->rowCount() > 0) {
+                return ["status" => "ok", "mensaje" => "Préstamo actualizado"];
+            } else {
+                return ["status" => "sin_cambios", "mensaje" => "No se encontró el préstamo o ya estaba prestado"];
+            }
         } else {
-            return ["status" => "sin_cambios", "mensaje" => "No se encontró el préstamo o ya estaba prestado"];
+            return ["status" => "error", "mensaje" => $stmt->errorInfo()];
         }
-    } else {
-        return ["status" => "error", "mensaje" => $stmt->errorInfo()];
     }
-}
 
-}
+    static public function mdlAceptarSalida($tabla, $datos){
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (id_prestamo, id_usuario) VALUES (:id_prestamo,:id_usuario)");
+
+        $stmt->bindParam(":id_prestamo", $datos["id_prestamo"], PDO::PARAM_INT);
+        $stmt->bindParam(":id_usuario", $datos["id_usuario"], PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return "ok";
+        } else {
+            return "error";
+        } 
+        
+        $stmt -> close();
+        $stmt = null;    
+    }
+
+} //ModeloSalidas

@@ -183,16 +183,6 @@
               <ul class="nav nav-treeview">';
         // Solo administradores, líder TIC, mesa de ayuda y almacén 
         if (ControladorValidacion::validarPermisoSesion([19, 20, 21, 22])) {
-          echo '<li class="nav-item">
-              <a href="consultar-solicitudes" class="nav-link">
-              <i class="far fa-circle nav-icon"></i>
-              <span class="badge badge-info right">6+</span>
-              <p>
-              Consultar
-              </p>
-              </a>
-              </li>';
-        }
 
         // "Solicitudes" y "Mis solicitudes" para todos los roles
         echo '<li class="nav-item">
@@ -204,6 +194,17 @@
               </p>
               </a>
               </li>';
+              
+              echo '<li class="nav-item">
+              <a href="consultar-solicitudes" class="nav-link">
+              <i class="far fa-circle nav-icon"></i>
+              <span class="badge badge-info right">6+</span>
+              <p>
+              Consultar
+              </p>
+              </a>
+              </li>';
+        }
         echo '<li class="nav-item">
               <a href="mis-solicitudes" class="nav-link">
               <i class="far fa-circle nav-icon"></i>

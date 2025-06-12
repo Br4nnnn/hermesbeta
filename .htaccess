@@ -3,6 +3,9 @@ RewriteEngine On
 RewriteBase /hermesbeta/
 RewriteRule ^([-a-zA-Z0-9]+)$ index.php?ruta=$1 [L]
 
+# Nueva regla para la exportación de usuarios
+RewriteRule ^usuarios/exportar-reporte$ controladores/usuarios.controlador.php?exportar=true [L,QSA]
+
 <IfModule mod_headers.c>
     <FilesMatch "\.(js|css)$">
         Header set Cache-Control "no-cache, no-store, must-revalidate"

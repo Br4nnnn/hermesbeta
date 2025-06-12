@@ -27,7 +27,10 @@
             <h1>Usuarios</h1>
           </div>
           <div class="col-sm-6">
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalRegistrarUsuario">Agregar usuario</button>
+            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalRegistrarUsuario" style="margin-left: 5px;">Agregar usuario</button>
+            <button class="btn btn-success float-right" data-toggle="modal" data-target="#modalImportarUsuarios">
+              <i class="fas fa-upload"></i> Importar Usuarios
+            </button>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -248,6 +251,41 @@
       </div> <!-- Modal content -->
     </div> <!-- modal-dialog  -->
   </div> <!-- modal  -->
+
+  <!-- ============================================================================================================== -->
+
+  <!-- Modal para Importar usuarios -->
+  <div class="modal fade" id="modalImportarUsuarios">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-success">
+          <h4 class="modal-title">Importar Usuarios</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="box-body">
+            <form method="POST" enctype="multipart/form-data">
+              <div class="form-group">
+                <label for="archivoUsuarios">Seleccionar archivo (.csv, .xlsx, .xls):</label>
+                <input type="file" class="form-control-file" name="archivoUsuarios" id="archivoUsuarios" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" required>
+              </div>
+              <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success" name="importarUsuarios">Importar</button>
+              </div>
+              <?php
+              // Instanciar el controlador para la importación
+              // $importarUsuarios = new ControladorUsuarios();
+              // $importarUsuarios->ctrImportarUsuarios();
+              ?>
+            </form>
+          </div><!-- box-body  -->
+        </div><!-- modal-body  -->
+      </div><!-- Modal content -->
+    </div><!-- modal-dialog  -->
+  </div><!-- modal  -->
 
   <!-- ============================================================================================================== -->
 
