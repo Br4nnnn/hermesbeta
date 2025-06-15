@@ -57,7 +57,7 @@
                                                 echo '</td>
                                                 <td>
                                                     <div class="btn-group">
-                                                        <button class="btn btn-default btn-xs btnEditarRol" idRol="'.$value["id_rol"].'" data-toggle="modal" data-target="#modalEditRol"><i class="fas fa-edit"></i></button>';
+                                                        <button class="btn btn-default btn-xs btnEditarRol" idRol="'.$value["id_rol"].'" data-bs-toggle="tooltip" title= "Editar rol" "data-toggle="modal" data-target="#modalEditRol"><i class="fas fa-edit"></i></button>';
                                             echo '</div></td></tr>';
                                         }
                                         ?>

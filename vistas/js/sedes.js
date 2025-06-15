@@ -51,3 +51,8 @@ $(document).on("click", ".btnActivarSede", function () {
         $(this).attr("estadoSede", "inactiva");
     }
 });
+
+//tooltip
+$(document).ready(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip();
+});

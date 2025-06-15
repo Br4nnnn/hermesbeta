@@ -51,12 +51,7 @@ class AjaxUsuarios
 // Bloque para importar usuarios masivamente
 if(isset($_POST["accion"]) && $_POST["accion"] == "importarUsuariosMasivo"){
     $importar = new AjaxUsuarios();
-    $importar->ajaxImportarUsuariosMasivo();
-    // $importar = new ControladorUsuarios();
-    // $importar->ctrImportarUsuariosMasivo();
-    // It's important to exit here if ctrImportarUsuariosMasivo() echoes JSON and exits.
-    // If it returns data, then this script would continue and potentially corrupt the JSON output.
-    // For now, assuming ctrImportarUsuariosMasivo will handle echoing JSON and exiting.
+    $importar->ajaxImportarUsuariosMasivo(); // This method call includes an exit;
 }
 
 if (isset($_POST["sede"])) {

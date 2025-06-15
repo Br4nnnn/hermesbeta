@@ -63,7 +63,7 @@
               </tr>
             </thead>
 
-          </table
+</table>
 
             </div>
           <!-- /.card-body -->

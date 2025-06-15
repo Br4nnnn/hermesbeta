@@ -1,13 +1,9 @@
 # Template
 AdminLTE/
-modelos/conexion.php
-ajax/serverside/serverside.conexion.php
-
-# Ignore all files in the root directory
-.htaccess
-
-# Ignore all files in the root directory
-.conexion.php
+# Ignore the following files and directories
+/.htaccess
+/modelos/conexion.php
+/ajax/serverside/serverside.conexion.php
 
 # Error log
 log.php
