@@ -480,11 +480,13 @@ class ControladorUsuarios{
 }
 
 static public function ctrImportarUsuariosMasivo() {
-    if (isset($_FILES['archivoUsuarios']) && $_FILES['archivoUsuarios']['error'] == UPLOAD_ERR_OK) {
-        $filePath = $_FILES['archivoUsuarios']['tmp_name'];
+    ob_start();
+    try {
+        if (isset($_FILES['archivoUsuarios']) && $_FILES['archivoUsuarios']['error'] == UPLOAD_ERR_OK) {
+            $filePath = $_FILES['archivoUsuarios']['tmp_name'];
 
-        try {
-            $fileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($filePath);
+            try {
+                $fileType = \PhpOffice\PhpSpreadsheet\IOFactory::identify($filePath);
             $reader = \PhpOffice\PhpSpreadsheet\IOFactory::createReader($fileType);
             $spreadsheet = $reader->load($filePath);
             $worksheet = $spreadsheet->getActiveSheet();
@@ -504,8 +506,8 @@ static public function ctrImportarUsuariosMasivo() {
                 $direccion = trim($worksheet->getCell('G' . $row)->getValue());
                 $genero = trim($worksheet->getCell('H' . $row)->getValue()); // 1:Femenino, 2:Masculino, 3:No declara
                 $idRol = trim($worksheet->getCell('I' . $row)->getValue());
-                $idSede = trim($worksheet->getCell('J' . $row)->getValue());
-                $idFicha = trim($worksheet->getCell('K' . $row)->getValue());
+                // $idSede = trim($worksheet->getCell('J' . $row)->getValue());
+                $idFicha = trim($worksheet->getCell('J' . $row)->getValue());
 
                 // Validaciones básicas
                 if (empty($nombre) || empty($apellido) || empty($tipoDocumento) || empty($numeroDocumento) || empty($email) || empty($idRol)) {
@@ -525,7 +527,7 @@ static public function ctrImportarUsuariosMasivo() {
                     continue;
                 }
 
-                $idSedeFinal = null;
+                // $idSedeFinal = null;
                 $idFichaFinal = null;
 
                 // Rol Aprendiz (ID 6 asumido) requiere Sede y Ficha
@@ -535,18 +537,18 @@ static public function ctrImportarUsuariosMasivo() {
                         continue;
                     }
                     // Validar que la sede exista
-                    $sedeExiste = ModeloSedes::mdlMostrarSedes("sedes", "id_sede", $idSede);
-                    if(!$sedeExiste){
-                        $usuariosFallidos[] = ["fila" => $row, "documento" => $numeroDocumento, "error" => "La Sede ID '$idSede' no existe."];
-                        continue;
-                    }
+                    // $sedeExiste = ModeloSedes::mdlMostrarSedes("sedes", "id_sede", $idSede);
+                    // if(!$sedeExiste){
+                    //     $usuariosFallidos[] = ["fila" => $row, "documento" => $numeroDocumento, "error" => "La Sede ID '$idSede' no existe."];
+                    //     continue;
+                    // }
                      // Validar que la ficha exista y pertenezca a la sede
                     $fichaExiste = ModeloFichas::mdlMostrarFichas("fichas", "id_ficha", $idFicha);
-                    if(!$fichaExiste || $fichaExiste["id_sede"] != $idSede){
-                        $usuariosFallidos[] = ["fila" => $row, "documento" => $numeroDocumento, "error" => "La Ficha ID '$idFicha' no existe o no pertenece a la Sede ID '$idSede'."];
+                    if(!$fichaExiste){
+                        $usuariosFallidos[] = ["fila" => $row, "documento" => $numeroDocumento, "error" => "La Ficha ID '$idFicha' no existe ."];
                         continue;
                     }
-                    $idSedeFinal = $idSede;
+                    // $idSedeFinal = $idSede;
                     $idFichaFinal = $idFicha;
                 }
 
@@ -572,7 +574,7 @@ static public function ctrImportarUsuariosMasivo() {
                     "password" => $encriptarPassword,
                     "rol" => $idRol,
                     "foto" => $rutaFoto, // Foto por defecto
-                    "sede" => $idSedeFinal,
+                    // "sede" => $idSedeFinal,
                     "ficha" => $idFichaFinal,
                     "estado" => "activo", // Por defecto
                     "condicion" => "en_regla" // Por defecto
@@ -584,11 +586,11 @@ static public function ctrImportarUsuariosMasivo() {
                     $usuariosFallidos[] = ["fila" => $row, "documento" => $numeroDocumento, "error" => "El número de documento ya está registrado."];
                     continue;
                 }
-                $usuarioExistenteEmail = ModeloUsuarios::mdlMostrarUsuarios("usuarios", "correo_electronico", $email);
-                 if($usuarioExistenteEmail){
-                    $usuariosFallidos[] = ["fila" => $row, "documento" => $numeroDocumento, "error" => "El correo electrónico ya está registrado."];
-                    continue;
-                }
+                // $usuarioExistenteEmail = ModeloUsuarios::mdlMostrarUsuarios("usuarios", "correo_electronico", $email);
+                //  if($usuarioExistenteEmail){
+                //     $usuariosFallidos[] = ["fila" => $row, "documento" => $numeroDocumento, "error" => "El correo electrónico ya está registrado."];
+                //     continue;
+                // }
 
 
                 $respuestaModelo = ModeloUsuarios::mdlImportarUsuario("usuarios", $datos);
@@ -627,6 +629,7 @@ static public function ctrImportarUsuariosMasivo() {
                         $usuario['fila'], $usuario['documento'], $usuario['error']);
                 }
 
+                ob_end_clean();
                 return json_encode([
                     "status" => "success", 
                     "message" => $mensaje, 
@@ -636,19 +639,34 @@ static public function ctrImportarUsuariosMasivo() {
                     "nombreArchivo" => "importacion_usuarios_" . date('Y-m-d_H-i-s') . ".txt"
                 ]);
             } else {
+                 ob_end_clean();
                  return json_encode(["status" => "info", "message" => "El archivo no contenía datos para procesar o todas las filas estaban vacías.", "exitosos" => [], "fallidos" => []]);
             }
 
 
-        } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
-            return json_encode(["status" => "error", "message" => "Error procesando el archivo Excel/CSV: " . $e->getMessage()]);
-        } catch (Exception $e) {
-            return json_encode(["status" => "error", "message" => "Error general: " . $e->getMessage()]);
+            } catch (\PhpOffice\PhpSpreadsheet\Exception $e) {
+                ob_end_clean();
+                return json_encode(["status" => "error", "message" => "Error procesando el archivo Excel/CSV: " . $e->getMessage()]);
+            } catch (Exception $e) {
+                ob_end_clean();
+                return json_encode(["status" => "error", "message" => "Error general: " . $e->getMessage()]);
+            }
+        } else {
+            ob_end_clean();
+            return json_encode(["status" => "error", "message" => "No se seleccionó ningún archivo o hubo un error en la carga."]);
         }
-    } else {
-        return json_encode(["status" => "error", "message" => "No se seleccionó ningún archivo o hubo un error en la carga."]);
+    } catch (Throwable $t) {
+        error_log("Error crítico en ctrImportarUsuariosMasivo: " . $t->getMessage() . "\nStack trace:\n" . $t->getTraceAsString());
+        ob_end_clean();
+        return json_encode([
+            "status" => "error", 
+            "message" => "Ocurrió un error crítico en el servidor al procesar el archivo. Por favor, contacte al administrador. Detalles: " . $t->getMessage(), 
+            "exitosos" => [], 
+            "fallidos" => [],
+            "reporte" => null,
+            "nombreArchivo" => null
+        ]);
     }
-    exit; // Asegura que no haya más salida después del JSON
 }
 }
 ?>

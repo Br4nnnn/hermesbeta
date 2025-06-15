@@ -69,7 +69,7 @@ $(document).on("click", "#btnBuscarUsuarioConsultar", function () {
                     return (
                       '<div class="text-center"><div class="btn-group"><button class="btn btn-warning btnVerDetallePrestamo" idPrestamo="' +
                       row.id_prestamo +
-                      '" data-toggle="modal" data-target="#modal-detalle" type="button"><i class="fa fa-eye"></i></button></div></div>'
+                      '" title="Detalles del prestamos" data-bs-toggle="tooltip"data-toggle="modal" data-target="#modal-detalle" type="button"><i class="fa fa-eye"></i></button></div></div>'
                     );
                   },
                 },
@@ -228,3 +228,9 @@ $(document).ready(function() {
     }
   });
 });
+
+//tooltip
+$('#tblPrestamosUsuario').on('draw.dt', function () {
+  $('[title]').tooltip();
+});
+

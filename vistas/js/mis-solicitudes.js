@@ -74,3 +74,7 @@ $(document).on("click", ".btnVerDetalle", function () {
     },
   });
 });
+
+//tooltip
+$('[title]').tooltip();
+

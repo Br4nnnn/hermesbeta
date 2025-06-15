@@ -48,3 +48,8 @@ $(document).on("click", ".btnActivarRol", function() {
         $(this).attr("estadoRol", "inactivo");
     }
 });
+
+//tooltips
+$(document).ready(function () {
+    $('[data-bs-toggle="tooltip"]').tooltip();
+});

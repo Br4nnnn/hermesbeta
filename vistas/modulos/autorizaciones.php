@@ -84,7 +84,7 @@
                   echo '</div>
                           </td>
                           <td>
-                            <button class="btn btn-info btn-sm btnVerDetallePrestamo_Autorizar" idPrestamo="' . $value["id_prestamo"] . '" data-toggle="modal" data-target="#modalVerDetallesPrestamo">
+                            <button class="btn btn-info btn-sm btnVerDetallePrestamo_Autorizar" idPrestamo="' . $value["id_prestamo"] . '" title="Detalles del Prestamo" data-toggle="modal" data-target="#modalVerDetallesPrestamo">
                               <i class="fas fa-eye"></i>
                             </button>
                           </td>

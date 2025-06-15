@@ -51,7 +51,7 @@
                                                 <td>' . $prestamo["estado_prestamo"]. '</td>
                                                 <td>' . $prestamo["motivo"]. '</td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm btnVerDetalle" idPrestamo="'. $prestamo["id_prestamo"]. ' "data-toggle="modal" data-target="#modalMisDetalles"><i class="fa fa-eye"></i></button>
+                                                    <button class="btn btn-primary btn-sm btnVerDetalle" idPrestamo="'. $prestamo["id_prestamo"]. ' " title="Detalles del prestamo"data-toggle="modal" data-target="#modalMisDetalles"><i class="fa fa-eye"></i></button>
                                                 </td>
                                             </tr>';
                                     }
@@ -65,7 +65,7 @@
                                             <td>' . $prestamos["estado_prestamo"]. '</td>
                                             <td>' . $prestamos["motivo"]. '</td>
                                             <td>
-                                                <button class="btn btn-primary btn-sm btnVerMisDetalles" idPrestamo="'. $prestamos["id_prestamo"]. '" data-toggle="modal" data-target="#modalMisDetalles"><i class="fa fa-eye"></i></button>
+                                                <button class="btn btn-primary btn-sm btnVerMisDetalles" idPrestamo="'. $prestamos["id_prestamo"]. '" title="Detalles del prestamo  " data-toggle="modal" data-target="#modalMisDetalles"><i class="fa fa-eye"></i></button>
                                             </td>
                                         </tr>';
                                 }else {

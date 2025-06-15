@@ -732,6 +732,13 @@ $('#modalEditarUsuario').on('hidden.bs.modal', function() {
     // Clear all input fields inside the modal
 });
 
+//tooltips
+// Activar tooltips después de cada renderizado de tabla
+$('#tblUsuarios').on('draw.dt', function () {
+    $('[data-toggle="tooltip"]').tooltip();
+});
+
+
 
 //************************************************************
 //
@@ -822,6 +829,8 @@ $(document).on("submit", "#modalImportarUsuarios form", function(e) {
                     });
                 }
             } catch (e) {
+                console.error("Raw server response:", response);
+                console.error("Error parsing JSON:", e);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error inesperado',

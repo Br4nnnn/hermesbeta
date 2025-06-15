@@ -27,9 +27,9 @@ $('#tblFichas').DataTable({
             "targets": [6],
             "render": function(data, type, row) {
                 if (data === "activa") {
-                    return "<button  class='btn btn-success btn-xs btnActivarFicha' idFicha='" + row[0] + "' estadoFicha='inactiva'><i class='fas fa-check'></i></button>";
+                    return "<button  class='btn btn-success btn-xs btnActivarFicha' idFicha='" + row[0] + "' estadoFicha='inactiva' title='Ficha activa' data-toggle='tooltip'><i class='fas fa-check'></i></button>";
                 } else {
-                    return "<button  class='btn btn-danger btn-xs btnActivarFicha' idFicha='" + row[0] + "' estadoFicha='activa'><i class='fas fa-ban'></i></button>";                    
+                    return "<button  class='btn btn-danger btn-xs btnActivarFicha' idFicha='" + row[0] + "' estadoFicha='activa' title='Ficha inactiva' data-toggle='tooltip'><i class='fas fa-ban'></i></button>";                    
                 }
             }
         },
@@ -39,7 +39,7 @@ $('#tblFichas').DataTable({
             "render": function(row) {
                 
             return "<div class='btn-group'>" +
-                "<button title='Editar datos ficha' class='btn btn-default btn-xs btnEditarFicha' idFicha='" + row[0] + "' data-toggle='modal' data-target='#modalEditFicha'>" +
+                "<button title='Editar datos ficha' data-tooltip='tooltip' class='btn btn-default btn-xs btnEditarFicha' idFicha='" + row[0] + "' data-toggle='modal' data-target='#modalEditFicha'>" +
                 "<i class='fas fa-edit '></i>" +
                 "</button></div>";
 
@@ -125,4 +125,10 @@ $(document).on("click", ".btnActivarFicha", function() {
         $(this).html('<i class="fas fa-check">');
         $(this).attr("estadoFicha", "inactiva");
     }
+});
+
+//tooltips
+// Activar tooltips después de cada renderizado de tabla
+$('#tblFichas').on('draw.dt', function () {
+    $('[data-toggle="tooltip"]').tooltip();
 });
