@@ -799,7 +799,8 @@ $(document).on("submit", "#modalImportarUsuarios form", function(e) {
                 if (jsonResponse.status === "success") {
                     // Crear el archivo para descargar
                     if (jsonResponse.reporte) {
-                        var blob = new Blob([atob(jsonResponse.reporte)], {type: 'text/plain'});
+                        const contenidoBytes = Uint8Array.from(atob(jsonResponse.reporte), c => c.charCodeAt(0));
+                        var blob = new Blob([contenidoBytes], {type: 'text/plain;charset=utf-8'});
                         var link = document.createElement('a');
                         link.href = window.URL.createObjectURL(blob);
                         link.download = jsonResponse.nombreArchivo;

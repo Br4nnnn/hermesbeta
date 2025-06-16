@@ -38,10 +38,9 @@ class AjaxUsuarios
 
     public function ajaxImportarUsuariosMasivo()
     {
-        // Assuming ctrImportarUsuariosMasivo() handles the import logic and returns a response
+        header('Content-Type: application/json; charset=utf-8');
         $respuesta = ControladorUsuarios::ctrImportarUsuariosMasivo();
         echo $respuesta; // Assuming this returns a JSON response
-        // echo json_encode($respuesta);
         exit; // Ensure to exit after echoing JSON to prevent further output
     }
 
