@@ -93,6 +93,11 @@ if (isset($_POST["accion"])) {
             $autorizar->idPrestamo = $_POST["idPrestamo"];
             $autorizar->ajaxMostrarAutorizaciones();
             break;
-
+            
+        case 'listarPrestamosAutorizados':
+            $filtros = isset($_POST['filtros']) ? $_POST['filtros'] : [];
+            $respuesta = ControladorAutorizaciones::ctrListarPrestamosAutorizados($filtros);
+            echo json_encode($respuesta);
+            break;
     }
 }
