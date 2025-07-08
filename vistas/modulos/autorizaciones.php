@@ -301,3 +301,58 @@
       </div>
     </div>
   </div>
+  
+  <!-- Modal para ver préstamos autorizados -->
+  <div class="modal fade" id="modalPrestamosAutorizados" tabindex="-1" role="dialog" aria-labelledby="modalPrestamosAutorizadosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header bg-info">
+          <h5 class="modal-title" id="modalPrestamosAutorizadosLabel">Préstamos Autorizados</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="formFiltrosAutorizados" class="form-inline mb-3">
+            <div class="form-group mr-2">
+              <label for="filtroFechaInicio" class="mr-1">Fecha Inicio:</label>
+              <input type="date" id="filtroFechaInicio" class="form-control">
+            </div>
+            <div class="form-group mr-2">
+              <label for="filtroFechaFin" class="mr-1">Fecha Fin:</label>
+              <input type="date" id="filtroFechaFin" class="form-control">
+            </div>
+            <div class="form-group mr-2">
+              <label for="filtroUsuario" class="mr-1">Usuario:</label>
+              <input type="text" id="filtroUsuario" class="form-control" placeholder="Nombre o ID">
+            </div>
+            <div class="form-group mr-2">
+              <label for="filtroSede" class="mr-1">Sede:</label>
+              <input type="text" id="filtroSede" class="form-control" placeholder="Sede">
+            </div>
+            <button type="button" id="btnAplicarFiltros" class="btn btn-primary">Filtrar</button>
+          </form>
+          <table id="tblPrestamosAutorizados" class="table table-bordered table-striped" style="width:100%">
+            <thead>
+              <tr>
+                <th>ID Préstamo</th>
+                <th>Solicitante</th>
+                <th>Fecha Inicio</th>
+                <th>Fecha Fin</th>
+                <th>Estado</th>
+                <th>Sede</th>
+                <th>Detalle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Datos cargados dinámicamente -->
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
