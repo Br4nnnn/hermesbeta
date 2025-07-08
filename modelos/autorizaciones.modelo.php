@@ -163,4 +163,42 @@ class ModeloAutorizaciones
         $stmt->close();
         $stmt = null;
     }
+
+    static public function mdlListarPrestamosAutorizados($filtros = [])
+    {
+        $sql = "SELECT p.id_prestamo, u.nombre AS solicitante, p.fecha_inicio, p.fecha_fin, p.estado_prestamo, s.nombre AS sede FROM prestamos p "
+            . "JOIN usuarios u ON p.usuario_id = u.id_usuario "
+            . "LEFT JOIN sedes s ON p.sede_id = s.id_sede "
+            . "WHERE p.estado_prestamo = 'Autorizado' AND p.tipo_prestamo = 'Reservado'";
+
+        $params = [];
+
+        if (!empty($filtros)) {
+            if (!empty($filtros['fecha_inicio']) && !empty($filtros['fecha_fin'])) {
+                $sql .= " AND p.fecha_inicio >= :fecha_inicio AND p.fecha_fin <= :fecha_fin";
+                $params[':fecha_inicio'] = $filtros['fecha_inicio'];
+                $params[':fecha_fin'] = $filtros['fecha_fin'];
+            }
+            if (!empty($filtros['usuario'])) {
+                $sql .= " AND u.nombre LIKE :usuario";
+                $params[':usuario'] = "%" . $filtros['usuario'] . "%";
+            }
+            if (!empty($filtros['sede'])) {
+                $sql .= " AND s.nombre LIKE :sede";
+                $params[':sede'] = "%" . $filtros['sede'] . "%";
+            }
+        }
+
+        $sql .= " ORDER BY p.fecha_inicio DESC";
+
+        $stmt = Conexion::conectar()->prepare($sql);
+
+        foreach ($params as $key => $value) {
+            $stmt->bindValue($key, $value);
+        }
+
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 }
