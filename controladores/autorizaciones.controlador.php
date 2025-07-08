@@ -47,4 +47,9 @@ class ControladorAutorizaciones {
         }
     }
 
+    static public function ctrListarPrestamosAutorizados($filtros = []) {
+        $respuesta = ModeloAutorizaciones::mdlListarPrestamosAutorizados($filtros);
+        return $respuesta;
+    }
+
 }
