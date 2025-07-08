@@ -301,3 +301,77 @@ $(document).on("click", ".btnRechazar", function () {
 
 //tooltip
 $("[title]").tooltip();
+
+
+$(document).ready(function() {
+  // Función para cargar préstamos autorizados con filtros
+  function cargarPrestamosAutorizados(filtros = {}) {
+    $.ajax({
+      url: 'ajax/autorizaciones.ajax.php',
+      method: 'POST',
+      data: {
+        accion: 'listarPrestamosAutorizados',
+        filtros: filtros
+      },
+      dataType: 'json',
+      success: function(respuesta) {
+        let tabla = $('#tblPrestamosAutorizados').DataTable();
+        tabla.clear();
+        respuesta.forEach(function(prestamo) {
+          tabla.row.add([
+            prestamo.id_prestamo,
+            prestamo.solicitante,
+            prestamo.fecha_inicio,
+            prestamo.fecha_fin,
+            prestamo.estado_prestamo,
+            prestamo.sede || '',
+            `<button class=\"btn btn-info btnVerDetallePrestamo_Autorizar\" idPrestamo=\"${prestamo.id_prestamo}\" data-toggle=\"modal\" data-target=\"#modalVerDetallesPrestamo\"><i class=\"fas fa-eye\"></i></button>`
+          ]);
+        });
+        tabla.draw();
+      }
+    });
+  }
+
+  // Inicializar DataTable para préstamos autorizados
+  $('#tblPrestamosAutorizados').DataTable({
+    responsive: true,
+    lengthChange: true,
+    searching: true,
+    ordering: true,
+    paging: true,
+    info: true,
+    language: {
+      sProcessing: 'Procesando...',
+      sLengthMenu: 'Mostrar _MENU_ registros',
+      sZeroRecords: 'No se encontraron resultados',
+      sEmptyTable: 'Ningún dato disponible en esta tabla',
+      sInfo: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_',
+      sInfoEmpty: 'Mostrando registros del 0 al 0 de un total de 0',
+      sInfoFiltered: '(filtrado de un total de _MAX_ registros)',
+      search: 'Buscar:',
+      paginate: {
+        first: 'Primero',
+        last: 'Último',
+        next: 'Siguiente',
+        previous: 'Anterior'
+      }
+    }
+  });
+
+  // Evento para abrir modal y cargar datos
+  $('#btnVerAutorizados').on('click', function() {
+    cargarPrestamosAutorizados();
+  });
+
+  // Evento para aplicar filtros
+  $('#btnAplicarFiltros').on('click', function() {
+    let filtros = {
+      fechaInicio: $('#filtroFechaInicio').val(),
+      fechaFin: $('#filtroFechaFin').val(),
+      usuario: $('#filtroUsuario').val(),
+      sede: $('#filtroSede').val()
+    };
+    cargarPrestamosAutorizados(filtros);
+  });
+});
