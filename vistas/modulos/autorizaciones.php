@@ -17,6 +17,12 @@
 
     <section class="content">
       <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Préstamos Reservados</h3>
+          <button type="button" class="btn btn-info float-right" id="btnVerAutorizados" data-toggle="modal" data-target="#modalPrestamosAutorizados">
+            Ver Préstamos Autorizados
+          </button>
+        </div>
         <div class="card-body">
           <table id="tblAutorizaciones" class="table table-bordered table-striped">
             <thead class="bg-dark">
