@@ -33,7 +33,7 @@ session_start();
   <link rel="stylesheet" href="vistas/dist/css/adminlte.css">
   <!-- mi css -->
   <link rel="stylesheet" href="vistas/css/plantilla.css">
-   <!-- summernote -->
+  <!-- summernote -->
   <link rel="stylesheet" href="vistas/plugins/summernote/summernote-bs4.min.css">
 
   <!-- ================================================================================================== -->
@@ -71,8 +71,21 @@ session_start();
 
   <!-- AdminLTE App -->
   <script src="vistas/dist/js/adminlte.min.js"></script>
-  <!-- AdminLTE for demo purposes -->
-  <!-- <script src="vistas/dist/js/demo.js"></script>   -->
+  
+
+  <!-- CSS para evitar FOUC (Flash of Unstyled Content) -->
+  <style>
+    body {
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    body.loaded {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
 
 </head>
 
@@ -90,9 +103,9 @@ session_start();
 
     echo '<script>
         const usuarioActual = {
-            id: '.$_SESSION['id_usuario'].',
-            cedula: '.$_SESSION['numero_documento'].',
-            permisos: '.json_encode($_SESSION['permisos']).'  
+            id: ' . $_SESSION['id_usuario'] . ',
+            cedula: ' . $_SESSION['numero_documento'] . ',
+            permisos: ' . json_encode($_SESSION['permisos']) . '  
         }
     </script>';
 
@@ -140,6 +153,8 @@ session_start();
   }
   ?>
 
+
+
   <script src="vistas/js/plantilla.js"></script>
   <script src="vistas/js/sedes.js"></script>
   <script src="vistas/js/fichas.js"></script>
@@ -156,6 +171,13 @@ session_start();
   <script src="vistas/js/salidas.js"></script>
   <script src="vistas/js/mis-solicitudes.js"></script>
   <script src="vistas/js/notificaciones.js"></script>
+
+  <!-- JS para evitar FOUC (Flash of Unstyled Content) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      document.body.classList.add('loaded');
+    });
+  </script>
 
 
 </body>

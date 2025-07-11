@@ -28,19 +28,30 @@ $(document).on("click", "#btnBuscarSolicitante", function () {
           $("#fichaSolicitante").val("Ficha: " + respuesta["codigo"]);
           $("#fichaSolicitante").attr("disabled", true);
           if (respuesta["nombre_rol"] == "Aprendiz") {
-            if (respuesta["estado"] != "activo" || respuesta["estado_ficha"] != "activa") {
+            if (respuesta["estado"] != "activo" || respuesta["estado_ficha"] != "activa" || respuesta["condicion"] == "penalizado") {
 
+              if (respuesta["estado"] != "activo" && respuesta["condicion"] == "penalizado") {
+                 $("#nombreSolicitante")
+                  .removeClass("bg-success")
+                  .addClass("bg-danger")
+                  .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - "+  "" + respuesta["estado"] + " y " +  "" + respuesta["condicion"] + "");
 
-
-              //estado del usuario
-              if (respuesta["estado"] != "activo") {
+              }
+              else if (respuesta["estado"] != "activo") {
                 $("#nombreSolicitante")
                   .removeClass("bg-success")
                   .addClass("bg-danger")
-                  .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - Inactivo");
-              } else {
-                $("#nombreSolicitante").removeClass("bg-danger").addClass("bg-success");
+                  .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - "+  "" + respuesta["estado"] + " " );
+
               }
+              else if (respuesta["condicion"] == "penalizado") {
+                $("#nombreSolicitante")
+                  .removeClass("bg-success")
+                  .addClass("bg-danger")
+                  .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - "+  "" + respuesta["condicion"] + " " );
+
+              }
+
 
               // estado de la ficha
               if (respuesta["estado_ficha"] != "activa") {
@@ -61,17 +72,18 @@ $(document).on("click", "#btnBuscarSolicitante", function () {
 
 
               return;
-            }
-            // ambos están activos
-            $("#nombreSolicitante")
-              .removeClass("bg-danger")
-              .addClass("bg-success");
+            }else{
+              // ambos están activos
+              $("#nombreSolicitante")
+                .removeClass("bg-danger")
+                .addClass("bg-success");
 
-            $("#fichaSolicitante")
-              .removeClass("bg-danger")
-              .addClass("bg-success");
-            $(".ficha-d").removeClass("d-none");
-            $(".infoEquiposSolicitados").removeClass("d-none");
+              $("#fichaSolicitante")
+                .removeClass("bg-danger")
+                .addClass("bg-success");
+              $(".ficha-d").removeClass("d-none");
+              $(".infoEquiposSolicitados").removeClass("d-none");
+            }
 
 
             // initializeDataTable("#tblSolicitantes");
@@ -79,18 +91,51 @@ $(document).on("click", "#btnBuscarSolicitante", function () {
             // Si no es aprendiz, no se valida el estado de la ficha
             $(".ficha-d").addClass("d-none");
 
-            //estado del usuario
-            if (respuesta["estado"] != "activo") {
-              $("#nombreSolicitante")
-                .removeClass("bg-success")
-                .addClass("bg-danger")
-                .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - Inactivo");
+            //validacion de otro rol, diferente al aprendiz
+            if (respuesta["estado"] != "activo" && respuesta["condicion"] == "penalizado") {
+                 $("#nombreSolicitante")
+                  .removeClass("bg-success")
+                  .addClass("bg-danger")
+                  .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - "+  "" + respuesta["estado"] + " y " +  "" + respuesta["condicion"] + "");
+                  $(".infoEquiposSolicitados").addClass("d-none");
 
-              $(".infoEquiposSolicitados").addClass("d-none");
-            } else {
-              $("#nombreSolicitante").removeClass("bg-danger").addClass("bg-success");
-              $(".infoEquiposSolicitados").removeClass("d-none");
-            }
+              }
+              else if (respuesta["estado"] != "activo") {
+                $("#nombreSolicitante")
+                  .removeClass("bg-success")
+                  .addClass("bg-danger")
+                  .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - "+  "" + respuesta["estado"] + " " );
+                  $(".infoEquiposSolicitados").addClass("d-none");
+
+              }
+              else if (respuesta["condicion"] == "penalizado") {
+                $("#nombreSolicitante")
+                  .removeClass("bg-success")
+                  .addClass("bg-danger")
+                  .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - "+  "" + respuesta["condicion"] + " " );
+                  $(".infoEquiposSolicitados").addClass("d-none");
+
+              }else {
+                  // si esta todo bien se ejecuta todo
+                $("#nombreSolicitante")
+                  .removeClass("bg-danger")
+                  .addClass("bg-success")
+                $(".infoEquiposSolicitados").removeClass("d-none");
+              }
+
+            //estado del usuario y condicion del usuario
+            // if (respuesta["estado"] != "activo" || respuesta["condicion"] == "penalizado") {
+            //   $("#nombreSolicitante")
+            //     .removeClass("bg-success")
+            //     .addClass("bg-danger")
+            //     .val(respuesta["nombre"] + " " + respuesta["apellido"] + " (" + respuesta["nombre_rol"] + ") - Inactivo o Penalizado");
+
+            //   $(".infoEquiposSolicitados").addClass("d-none");
+            // } else {
+            //   $("#nombreSolicitante").removeClass("bg-danger").addClass("bg-success");
+            //   $(".infoEquiposSolicitados").removeClass("d-none");
+            // }
+
 
 
 
@@ -159,17 +204,56 @@ $('#reservation').on('apply.daterangepicker', function (ev, picker) {
         alert("No se encontraron resultados.");
       } else {
 
-        console.log("actualizar datatable con los resultados");
+        //  destruir la tabla si existe
+        if ($.fn.DataTable.isDataTable('#tblActivosSolicitar')) {
+          $('#tblActivosSolicitar').DataTable().clear().destroy();
+        };
+        // Inicializar el DataTable
+        $('#tblActivosSolicitar').DataTable({
+          "responsive": true,
+          "autoWidth": false,
+          "lengthChange": false,
+          "info": true,
+          "paging": true,
+          "language": {
+            "lengthMenu": "Mostrar _MENU_ registros",
+            "zeroRecords": "Selecciones un rango de fechas",
+            "info": "Mostrando pagina _PAGE_ de _PAGES_",
+            "infoEmpty": "No hay equipos disponibles",
+            "infoFiltered": "(filtrado de _MAX_ total registros)",
+            "search": "Buscar:",
+            "paginate": {
+              "first":      "Primero",
+              "last":       "Ultimo",
+              "next":       "Siguiente",
+              "previous":   "Anterior"
+            }
+          },
+          "data": respuesta.map(function (item) {
+            return [
+              item.descripcion, // Reemplazar con el nombre real del campo para la descripción
+              item.etiqueta, // Reemplazar con el nombre real del campo para la etiqueta
+              item.categoria_nombre, // Reemplazar con el nombre real del campo para el nombre de la categoría
+              item.ubicacion_nombre, // Reemplazar con el nombre real del campo para el nombre de la ubicación
+              '<button class="btn btn-primary btn-sm btnAgregarEquipo recoverButton" idEquipoAgregar="' + item["equipo_id"] + '"><i class="fas fa-plus"></i> Agregar</button>' // Botón para agregar el activo
+            ];
+          })
+
+
+
+        });
+
+        // console.log("actualizar datatable con los resultados");
         // Actualizar los resultados obtenidos
-        $('#tblActivosSolicitar').DataTable().clear().rows.add(respuesta.map(function (item) {
-          return [
-            item.descripcion, // Reemplazar con el nombre real del campo para la descripción
-            item.etiqueta, // Reemplazar con el nombre real del campo para la etiqueta
-            item.categoria_nombre, // Reemplazar con el nombre real del campo para el nombre de la categoría
-            item.ubicacion_nombre, // Reemplazar con el nombre real del campo para el nombre de la 
-            '<button class="btn btn-primary btn-sm btnAgregarEquipo recoverButton" idEquipoAgregar="' + item["equipo_id"] + '"><i class="fas fa-plus"></i> Agregar</button>' // Botón para agregar el activo
-          ];
-        })).draw();
+        // $('#tblActivosSolicitar').DataTable().clear().rows.add(respuesta.map(function (item) {
+        //   return [
+        //     item.descripcion, // Reemplazar con el nombre real del campo para la descripción
+        //     item.etiqueta, // Reemplazar con el nombre real del campo para la etiqueta
+        //     item.categoria_nombre, // Reemplazar con el nombre real del campo para el nombre de la categoría
+        //     item.ubicacion_nombre, // Reemplazar con el nombre real del campo para el nombre de la 
+        //     '<button class="btn btn-primary btn-sm btnAgregarEquipo recoverButton" idEquipoAgregar="' + item["equipo_id"] + '"><i class="fas fa-plus"></i> Agregar</button>' // Botón para agregar el activo
+        //   ];
+        // })).draw();
         // Mostrar los resultados en el formulario 
         $("#initialDate").val(fechaInicio);
         $("#finalDate").val(fechaFin);

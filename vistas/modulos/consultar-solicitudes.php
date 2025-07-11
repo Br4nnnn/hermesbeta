@@ -141,23 +141,25 @@
                                 <h5 class="card-title">Equipos Solicitados</h5>
                             </div>
                             <div class="card-body p-10">
-                                <table class="table table-bordered table-striped " id="tblDetallePrestamo">
-                                    <thead>
-                                        <tr>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped " id="tblDetallePrestamo">
+                                        <thead>
+                                            <tr>
 
-                                            <th>ID</th>
-                                            <th>Categoría</th>
-                                            <th>Equipo</th>
-                                            <th>etiqueta</th>
-                                            <th>Serial</th>
-                                            <th>Ubicación</th>
+                                                <th>ID</th>
+                                                <th>Categoría</th>
+                                                <th>Equipo</th>
+                                                <th>etiqueta</th>
+                                                <th>Serial</th>
+                                                <th>Ubicación</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <!-- Aquí se cargarán los detalles del préstamo -->
-                                    </tbody>
-                                </table>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- Aquí se cargarán los detalles del préstamo -->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

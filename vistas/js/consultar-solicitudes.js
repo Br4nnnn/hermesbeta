@@ -167,12 +167,13 @@ $(document).on("click", ".btnVerDetallePrestamo", function () {
                   last: "Último",
                   next: "Siguiente",
                   previous: "Anterior",
-                }
+                },
 
-              }
-            })
+              },
+              
+            });
           }
-        })
+        });
     },
   });
 });

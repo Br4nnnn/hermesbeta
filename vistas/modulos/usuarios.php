@@ -27,10 +27,23 @@
             <h1>Usuarios</h1>
           </div>
           <div class="col-sm-6">
-            <button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalRegistrarUsuario" style="margin-left: 5px;">Agregar usuario</button>
-            <button class="btn btn-success float-right" data-toggle="modal" data-target="#modalImportarUsuarios">
-              <i class="fas fa-upload"></i> Importar Usuarios
-            </button>
+
+            <?php
+            
+            // Permiso para validar la agregación de un nuevo ususario
+            if(ControladorValidacion::validarPermisoSesion([35])){
+              echo '<button class="btn btn-primary float-right" data-toggle="modal" data-target="#modalRegistrarUsuario" style="margin-left: 5px;">Agregar usuario</button>';
+            }
+
+            // Permiso para importación masiva de usuarios
+            if(ControladorValidacion::validarPermisoSesion([36])){
+              echo '<button class="btn btn-success float-right" data-toggle="modal" data-target="#modalImportarUsuarios">
+                <i class="fas fa-upload"></i> Importar Usuarios
+              </button>';
+            }
+
+            ?>
+            
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -41,30 +54,24 @@
 
       <!-- Default box -->
       <div class="card">
-
-
-
         <div class="card-body">
-          <table id="tblUsuarios" class="table table-bordered table-striped table-hover">
-
-            <thead class="bg-dark">
-              <tr>
-                <th>#</th>
-                <th>Tipo de documento</th>
-                <th>Numero de documento</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Correo</th>
-                <th>Rol</th>
-                <th>Ficha</th>
-                <th>Estado</th>
-                <th>Condición</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-
-          </table>
-
+            <table id="tblUsuarios" class="table table-bordered table-striped table-hover">
+              <thead class="bg-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Tipo de documento</th>
+                  <th>Numero de documento</th>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Correo</th>
+                  <th>Rol</th>
+                  <th>Ficha</th>
+                  <th>Estado</th>
+                  <th>Condición</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+            </table>
         </div>
         <!-- /.card-body -->
 
@@ -505,19 +512,7 @@
               </div>
               <!-- form group -->
 
-              <!-- row password  -->
-              <div class="form-group">
-                <div class="row">
-                  <div class="col-lg-12">
-                    <div class="input-group ">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-key"></i></span>
-                      </div>
-                      <input type="password" class="form-control" name="nuevoPassword" placeholder="Password" required>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              
               <!-- form group -->
               <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

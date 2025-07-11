@@ -47,7 +47,7 @@ $(document).on("click", ".btnVerDetalle", function () {
                 { data: "numero_serie" },
                 { data: "ubicacion" },
               ],
-              responsive: true,
+              responsive: false,
               autoWidth: false,      
               ordering: true,        
               language: {
@@ -65,9 +65,11 @@ $(document).on("click", ".btnVerDetalle", function () {
                   last: "Último",
                   next: "Siguiente",
                   previous: "Anterior",
-                }
+                },
+                
 
-              }
+              },
+             
             })
           }
         })

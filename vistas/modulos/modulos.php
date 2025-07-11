@@ -60,9 +60,7 @@
                                             } else {
                                                 echo '<button class="btn btn-danger btn-xs btnActivarModulo" idModulo="'.$value["id_modulo"].'" estadoModulo="activo">Inactivo</button>';
                                             }
-                                            echo '</td>
-                                            <td>
-                                        </tr>';
+                                            echo '</tr>';
                                     }
                                     ?>
                                 </tbody>

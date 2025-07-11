@@ -137,12 +137,14 @@ class ControladorUsuarios
             ACTUALIZAR BASE DE DATOS
             =============================================*/
             $tabla = "usuarios";
+            $encriptar = crypt($_POST["nuevoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
             $datos = array(
                 "id_usuario" => $_POST["idUsuario"],
                 "correo_electronico" => $_POST["editarEmail"],
                 "telefono" => $_POST["editarTelefono"],
                 "direccion" => $_POST["editarDireccion"],
                 "genero" => $_POST["editarGenero"],
+                "clave"=> $encriptar,
                 "foto" => $ruta
             );
 
@@ -224,7 +226,7 @@ class ControladorUsuarios
                     imagejpeg($destino, $ruta);
                 }
                 $tabla = "usuarios";
-                $encriptar = crypt($_POST["nuevoPassword"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
+                $encriptar = crypt($_POST["nuevoNumeroDocumento"], '$2a$07$asxx54ahjppf45sd87a5a4dDDGsystemdev$');
                 $datos = array(
                     "nombre" => $_POST["nuevoNombre"],
                     "apellido" => $_POST["nuevoApellido"],

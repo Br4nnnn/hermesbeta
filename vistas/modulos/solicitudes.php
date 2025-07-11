@@ -35,15 +35,15 @@
                     <?php
                     $conteos = ControladorSolicitudes::ctrContarEquiposPorCategoria();
                     $conteos2 = ControladorSolicitudes::ctrContarEquiposPorReserva();
-                    
+
                     ?>
                     <div class="small-box bg-info">
                         <div class="inner">
-                           <h3>Portátiles</h3>
+                            <h3>Portátiles</h3>
                             <p><strong>Disponibles:</strong> <?php echo isset($conteos[1]) ? $conteos[1] : 0; ?></p>
                             <p><strong>Reservados:</strong> <?php echo isset($conteos2[1]) ? $conteos2[1] : 0; ?></p>
-                            
-                            
+
+
 
                         </div>
                         <div class="icon">
@@ -61,7 +61,7 @@
                             <p><strong>Disponibles:</strong> <?php echo isset($conteos[3]) ? $conteos[3] : 0; ?></p>
                             <p><strong>Reservados:</strong> <?php echo isset($conteos2[3]) ? $conteos2[3] : 0; ?></p>
 
-                            
+
                         </div>
                         <div class="icon">
                             <i class="fas fa-volume-up"></i>
@@ -74,11 +74,11 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                             <h3>Videobeam</h3>
+                            <h3>Videobeam</h3>
                             <p><strong>Disponibles:</strong> <?php echo isset($conteos[2]) ? $conteos[2] : 0; ?></p>
                             <p><strong>Reservados:</strong> <?php echo isset($conteos2[2]) ? $conteos2[2] : 0; ?></p>
 
-                            
+
                         </div>
                         <div class="icon">
                             <i class="fas fa-video"></i>
@@ -91,11 +91,11 @@
                     <!-- small box -->
                     <div class="small-box bg-info">
                         <div class="inner">
-                           <h3>Control remoto</h3>
+                            <h3>Control remoto</h3>
                             <p><strong>Disponibles:</strong> <?php echo isset($conteos[5]) ? $conteos[5] : 0; ?></p>
                             <p><strong>Reservados:</strong> <?php echo isset($conteos2[5]) ? $conteos2[5] : 0; ?></p>
 
-                            
+
                         </div>
                         <div class="icon">
                             <i class="fas fa-gamepad"></i>
@@ -108,7 +108,7 @@
 
             <div class="row">
                 <!-- Left side - Equipos -->
-                <div class="col-md-7">
+                <div class="col-md-12 col-lg-7">
                     <div class="card">
 
                         <div class="card-header bg-dark">
@@ -121,7 +121,7 @@
 
                             <div class="form-group">
                                 <div class="row">
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <div class="input-group ">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
@@ -130,9 +130,9 @@
                                                 id="NumeroIdSolicitante" placeholder="Número" required>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    <div class="col-lg-12">
                                         <div class="input-group">
-                                            <button class="btn btn-primary" id="btnBuscarSolicitante"><i
+                                            <button class="btn btn-block btn-primary" id="btnBuscarSolicitante"><i
                                                     class="fas fa-search"></i></button>
                                         </div>
 
@@ -148,7 +148,7 @@
                                 <!-- RANGO DE FECHAS -->
                                 <div class="form-group">
                                     <div class="row">
-                                        <div class="col-lg-6">
+                                        <div class="col-lg-12">
                                             <div class="input-group">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -189,15 +189,15 @@
                                             <tbody>
                                                 <?php
                                                 // Loop through the equipos and display them in the table
-                                                foreach ($respuesta as $key => $value) {
-                                                    echo '<tr>
-                                                        <td>' . $value["descripcion"] . '</td>
-                                                        <td>' . $value["etiqueta"] . '</td>
-                                                        <td>' . $value["categoria_nombre"] . '</td>
-                                                        <td>' . $value["ubicacion_nombre"] . '</td>
-                                                        <td> <button class="btn btn-primary btn-sm btnAgregarEquipo recoverButton" idEquipoAgregar="' . $value["equipo_id"] . '"><i class="fas fa-plus"></i> Agregar</button></td>
-                                                    </tr>';
-                                                }
+                                                // foreach ($respuesta as $key => $value) {
+                                                //     echo '<tr>
+                                                //         <td>' . $value["descripcion"] . '</td>
+                                                //         <td>' . $value["etiqueta"] . '</td>
+                                                //         <td>' . $value["categoria_nombre"] . '</td>
+                                                //         <td>' . $value["ubicacion_nombre"] . '</td>
+                                                //         <td> <button class="btn btn-primary btn-sm btnAgregarEquipo recoverButton" idEquipoAgregar="' . $value["equipo_id"] . '"><i class="fas fa-plus"></i> Agregar</button></td>
+                                                //     </tr>';
+                                                // }
 
 
 
@@ -224,7 +224,7 @@
 
 
                 <!-- Right side - Solicitud -->
-                <div class="col-md-5">
+                <div class="col-md-12 col-lg-5">
                     <div class="card">
 
                         <div class="card-header bg-dark">
